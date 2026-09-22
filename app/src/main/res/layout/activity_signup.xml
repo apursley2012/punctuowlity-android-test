@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="#C8CCCF"
+	android:backgroundTint="#88BBDEFB"
+	android:backgroundTintMode="src_in">
+
+	<!-- Top App Bar -->
+	<com.google.android.material.appbar.MaterialToolbar
+		android:id="@+id/top_bar"
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:layout_marginTop="24dp"
+		android:background="#ec5b5b"
+		android:minHeight="?attr/actionBarSize"
+		android:theme="?attr/actionBarTheme"
+		app:layout_constraintBottom_toTopOf="@+id/image_logo"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.0"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<!-- Back Button -->
+	<ImageButton
+		android:id="@+id/button_back"
+		android:layout_width="48dp"
+		android:layout_height="48dp"
+		android:layout_marginEnd="400dp"
+		android:background="#00FFFFFF"
+		app:layout_constraintBottom_toBottomOf="@+id/top_bar"
+		app:layout_constraintEnd_toEndOf="@+id/top_bar"
+		app:layout_constraintStart_toStartOf="@+id/top_bar"
+		app:layout_constraintTop_toTopOf="@+id/top_bar"
+		app:layout_constraintVertical_bias="0.0"
+		app:srcCompat="@drawable/ic_arrow_back" 
+		android:contentDescription="Go back" />
+
+	<!-- App Logo -->
+	<ImageView
+		android:id="@+id/image_logo"
+		android:layout_width="160dp"
+		android:layout_height="160dp"
+		android:layout_marginStart="144dp"
+		android:layout_marginEnd="144dp"
+		android:layout_marginBottom="20dp"
+		android:contentDescription="PunctuOwlity logo"
+		android:src="@drawable/punctuowlity_logo"
+		app:layout_constraintBottom_toTopOf="@+id/text_welcome"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/top_bar" />
+
+	<!-- Welcome Title -->
+
+	<!-- Email Input -->
+	<TextView
+		android:id="@+id/text_welcome"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="102dp"
+		android:layout_marginEnd="101dp"
+		android:layout_marginBottom="20dp"
+		android:fontFamily="@font/cormorant_upright_bold"
+		android:text="Create an Account"
+		android:textColor="#000050"
+		android:textSize="34sp"
+		android:textStyle="bold"
+		app:layout_constraintBottom_toTopOf="@+id/layout_email"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.503"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/image_logo" />
+
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/layout_email"
+		android:layout_width="385dp"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="32dp"
+		android:layout_marginStart="32dp"
+		android:layout_marginEnd="31dp"
+		android:layout_marginBottom="20dp"
+		app:boxBackgroundColor="#ffff"
+		app:boxBackgroundMode="outline"
+		app:boxCornerRadiusBottomEnd="24dp"
+		app:boxCornerRadiusBottomStart="24dp"
+		app:boxCornerRadiusTopEnd="24dp"
+		app:boxCornerRadiusTopStart="24dp"
+		app:boxStrokeColor="#000050"
+		app:layout_constraintBottom_toTopOf="@+id/layout_password"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/text_welcome">
+
+		<com.google.android.material.textfield.TextInputEditText
+			android:id="@+id/edit_email"
+			android:layout_width="match_parent"
+			android:layout_height="61dp"
+			android:hint="Enter your email"
+			android:inputType="textEmailAddress"
+			android:textColor="#000050"
+			android:textColorHint="#000050"
+			tools:layout_editor_absoluteY="5dp" />
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<!-- Password Input -->
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/layout_password"
+		android:layout_width="385dp"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="32dp"
+		android:layout_marginStart="32dp"
+		android:layout_marginEnd="31dp"
+		android:layout_marginBottom="20dp"
+		app:boxBackgroundColor="#ffff"
+		app:boxBackgroundMode="outline"
+		app:boxCornerRadiusBottomEnd="24dp"
+		app:boxCornerRadiusBottomStart="24dp"
+		app:boxCornerRadiusTopEnd="24dp"
+		app:boxCornerRadiusTopStart="24dp"
+		app:boxStrokeColor="#000050"
+		app:layout_constraintBottom_toTopOf="@+id/layout_confirm_password"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/layout_email"
+		app:passwordToggleEnabled="true">
+
+		<com.google.android.material.textfield.TextInputEditText
+			android:id="@+id/edit_password"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="Choose a password"
+			android:inputType="textPassword"
+			android:textColor="#000050"
+			android:textColorHint="#000050"
+			tools:layout_editor_absoluteY="5dp" />
+	</com.google.android.material.textfield.TextInputLayout>
+
+
+	<!-- Confirm Password -->
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/layout_confirm_password"
+		android:layout_width="385dp"
+		android:layout_height="wrap_content"
+		android:layout_marginHorizontal="32dp"
+		android:layout_marginStart="32dp"
+		android:layout_marginEnd="31dp"
+		android:layout_marginBottom="20dp"
+		app:boxBackgroundColor="#ffff"
+		app:boxBackgroundMode="outline"
+		app:boxCornerRadiusBottomEnd="24dp"
+		app:boxCornerRadiusBottomStart="24dp"
+		app:boxCornerRadiusTopEnd="24dp"
+		app:boxCornerRadiusTopStart="24dp"
+		app:boxStrokeColor="#000050"
+		app:layout_constraintBottom_toTopOf="@+id/checkbox_terms_privacy"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/layout_password"
+		app:passwordToggleEnabled="true">
+
+		<com.google.android.material.textfield.TextInputEditText
+			android:id="@+id/edit_confirm_password"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="Confirm password"
+			android:inputType="textPassword"
+			android:textColor="#000050"
+			android:textColorHint="#000050"
+			tools:layout_editor_absoluteY="5dp" />
+	</com.google.android.material.textfield.TextInputLayout>
+
+	<!-- Terms & Conditions and Privacy Policy Agreement Checkbox -->
+	<CheckBox
+		android:id="@+id/checkbox_email_updates"
+		android:layout_width="385dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="32dp"
+		android:layout_marginEnd="31dp"
+		android:layout_marginBottom="20dp"
+		android:fontFamily="@font/aref_ruqaa"
+		android:text="I agree to receive emails about news and updates."
+		android:textColor="#000050"
+		android:textSize="20sp"
+		android:textStyle="bold"
+		app:layout_constraintBottom_toTopOf="@+id/button_create_account"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/checkbox_terms_privacy" />
+
+
+	<!-- Email Updates Agreement Checkbox -->
+	<CheckBox
+		android:id="@+id/checkbox_terms_privacy"
+		android:layout_width="385dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="32dp"
+		android:layout_marginEnd="31dp"
+		android:layout_marginBottom="20dp"
+		android:fontFamily="@font/aref_ruqaa"
+		android:text="I have read and agree to the Privacy Policy, and Terms and Conditions."
+		android:textColor="#000050"
+		android:textSize="20sp"
+		android:textStyle="bold"
+		app:layout_constraintBottom_toTopOf="@+id/checkbox_email_updates"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/layout_confirm_password" />
+
+	<!-- Submit Button -->
+	<Button
+		android:id="@+id/button_create_account"
+		style="@style/Widget.Material3.Button.OutlinedButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="151dp"
+		android:layout_marginEnd="151dp"
+		android:layout_marginBottom="220dp"
+		android:backgroundTint="#33CCCC"
+		android:fontFamily="@font/aref_ruqaa"
+		android:text="Create Account"
+		android:textColor="#000050"
+		android:textSize="20sp"
+		android:textStyle="bold"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.48"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/checkbox_email_updates"
+		app:strokeColor="#000050"
+		app:strokeWidth="1.5dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
