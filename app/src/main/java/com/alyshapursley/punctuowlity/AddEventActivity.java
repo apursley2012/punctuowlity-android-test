@@ -1,5 +1,7 @@
 package com.alyshapursley.punctuowlity;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,8 +11,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 public final class AddEventActivity extends AppCompatActivity {
     static final String EXTRA_EVENT_ID = "event_id";
+    private static final String DATE_FORMAT = "MM/dd/yyyy";
+    private static final String TIME_FORMAT = "h:mm a";
 
     private DatabaseHelper databaseHelper;
     private EditText titleInput;
@@ -33,10 +42,75 @@ public final class AddEventActivity extends AppCompatActivity {
         categorySpinner = findViewById(R.id.spinner_category);
         Button saveButton = findViewById(R.id.button_save);
 
+        dateInput.setOnClickListener(view -> showDatePicker());
+        timeInput.setOnClickListener(view -> showTimePicker());
         findViewById(R.id.button_back).setOnClickListener(view -> finish());
         saveButton.setOnClickListener(view -> saveEvent());
 
         loadEventForEditing();
+    }
+
+    private Calendar calendarFromDate() {
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = dateInput.getText().toString().trim();
+        if (!currentDate.isEmpty()) {
+            try {
+                calendar.setTime(new SimpleDateFormat(DATE_FORMAT, Locale.US).parse(currentDate));
+            } catch (ParseException ignored) {
+                // Fall back to today if an older saved value cannot be parsed.
+            }
+        }
+        return calendar;
+    }
+
+    private Calendar calendarFromTime() {
+        Calendar calendar = Calendar.getInstance();
+        String currentTime = timeInput.getText().toString().trim();
+        if (!currentTime.isEmpty()) {
+            try {
+                calendar.setTime(new SimpleDateFormat(TIME_FORMAT, Locale.US).parse(currentTime));
+            } catch (ParseException ignored) {
+                // Fall back to the current time if an older saved value cannot be parsed.
+            }
+        }
+        return calendar;
+    }
+
+    private void showDatePicker() {
+        Calendar calendar = calendarFromDate();
+        DatePickerDialog dialog = new DatePickerDialog(
+                this,
+                (view, year, month, dayOfMonth) -> {
+                    Calendar selected = Calendar.getInstance();
+                    selected.set(year, month, dayOfMonth);
+                    dateInput.setText(
+                            new SimpleDateFormat(DATE_FORMAT, Locale.US).format(selected.getTime())
+                    );
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+        );
+        dialog.show();
+    }
+
+    private void showTimePicker() {
+        Calendar calendar = calendarFromTime();
+        TimePickerDialog dialog = new TimePickerDialog(
+                this,
+                (view, hourOfDay, minute) -> {
+                    Calendar selected = Calendar.getInstance();
+                    selected.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                    selected.set(Calendar.MINUTE, minute);
+                    timeInput.setText(
+                            new SimpleDateFormat(TIME_FORMAT, Locale.US).format(selected.getTime())
+                    );
+                },
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                false
+        );
+        dialog.show();
     }
 
     private void loadEventForEditing() {
@@ -56,6 +130,7 @@ public final class AddEventActivity extends AppCompatActivity {
         dateInput.setText(event.getDate());
         timeInput.setText(event.getTime());
         reminderSwitch.setChecked(event.isReminderEnabled());
+
         String[] categories = getResources().getStringArray(R.array.event_categories_values);
         for (int index = 0; index < categories.length; index++) {
             if (categories[index].equals(event.getCategory())) {
@@ -80,14 +155,9 @@ public final class AddEventActivity extends AppCompatActivity {
 
         long eventTime = ReminderScheduler.parseTriggerTime(date, time);
         if (eventTime < 0) {
-            Toast.makeText(
-                    this,
-                    "Use MM/DD/YYYY for the date and a time such as 1:30 PM",
-                    Toast.LENGTH_LONG
-            ).show();
+            Toast.makeText(this, "Choose a valid date and time", Toast.LENGTH_LONG).show();
             return;
         }
-
         if (reminderEnabled && eventTime <= System.currentTimeMillis()) {
             Toast.makeText(this, "Reminder time must be in the future", Toast.LENGTH_SHORT).show();
             return;
@@ -124,7 +194,6 @@ public final class AddEventActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT
             ).show();
         }
-
         finish();
     }
 }
